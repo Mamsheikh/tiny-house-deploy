@@ -6,7 +6,7 @@
         "node": "14.13.0"
       },
     "scripts": {
-        "start": "node src/index.js"
+      "start": "node src/index.js"
     },
     "dependencies": {
         "@google/maps": "^1.1.3",
