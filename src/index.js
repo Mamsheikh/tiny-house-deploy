@@ -17,14 +17,15 @@ const apollo_server_express_1 = require("apollo-server-express");
 const compression_1 = __importDefault(require("compression"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
+const path_1 = __importDefault(require("path"));
 const database_1 = require("./database");
 const graphql_1 = require("./graphql");
 const mount = (app) => __awaiter(void 0, void 0, void 0, function* () {
     const db = yield database_1.connectDatabase();
     app.use(cookie_parser_1.default(process.env.SECRET));
-    app.use(compression_1.default(), express_1.default.json({ limit: "2mb" }), express_1.default.static(`${__dirname}/client`), cookie_parser_1.default(process.env.SECRET), cors_1.default());
+    app.use(compression_1.default(), express_1.default.json({ limit: "2mb" }), express_1.default.static(path_1.default.join(__dirname, 'client')), cookie_parser_1.default(process.env.SECRET), cors_1.default());
     app.get("/*", (_req, res) => {
-        res.sendFile(`${__dirname}/client/index.html`);
+        res.sendFile(path_1.default.join(__dirname, 'client', 'client/index.html'));
     });
     const server = new apollo_server_express_1.ApolloServer({
         typeDefs: graphql_1.typeDefs, resolvers: graphql_1.resolvers, context: ({ req, res }) => ({ db, req, res })
